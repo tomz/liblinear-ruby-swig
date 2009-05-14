@@ -8,11 +8,11 @@ Gem::Specification.new do |s|
   s.description = %q{Ruby wrapper of LIBLINEAR using SWIG}
   s.email = %q{tom.z.zeng@gmail.com}
   s.extensions = ["ext/extconf.rb"]
-  s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
-  s.files = ["History.txt", "COPYING", "AUTHORS", "Manifest.txt", "README.txt", "Rakefile", "lib/linear.rb", "lib/linear_cv.rb", "ext/liblinear_wrap.cxx", "ext/linear.cpp", "ext/linear.h", "ext/extconf.rb", "ext/tron.h", "ext/tron.cpp", "ext/blas.h", "ext/blasp.h", "ext/dscal.c", "ext/dnrm2.c", "ext/ddot.c", "ext/daxpy.c"]
+  s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.rdoc"]
+  s.files = ["History.txt", "COPYING", "AUTHORS", "Manifest.txt", "README.rdoc", "Rakefile", "lib/linear.rb", "lib/linear_cv.rb", "ext/liblinear_wrap.cxx", "ext/linear.cpp", "ext/linear.h", "ext/extconf.rb", "ext/tron.h", "ext/tron.cpp", "ext/blas.h", "ext/blasp.h", "ext/dscal.c", "ext/dnrm2.c", "ext/ddot.c", "ext/daxpy.c"]
 #  s.has_rdoc = true
   s.homepage = %q{http://www.tomzconsulting.com}
-  s.rdoc_options = ["--main", "README.txt"]
+  s.rdoc_options = ["--main", "README.rdoc"]
   s.require_paths = ["lib","ext"]
   s.rubygems_version = %q{1.3.1}
   s.summary = %q{Ruby wrapper of LIBLINEAR using SWIG}
