@@ -1,0 +1,74 @@
+= liblinear-ruby-swig
+
+* Ruby interface to LIBLINEAR (using SWIG)
+* http://www.tomzconsulting.com
+
+== DESCRIPTION:
+
+This is the Ruby LIBLINEAR SWIG (Simplified Wrapper and Interface Generator) 
+interface. LIBLINEAR is a high performance machine learning library for large 
+scale text mining(http://www.csie.ntu.edu.tw/~cjlin/liblinear).
+
+A slightly modified version of LIBLINEAR 1.33 is included which allow turnning
+on/off the default debuging/logging messages. You don't need your own copy of 
+SWIG to use this library - all needed files are generated using SWIG already.
+
+The Ruby LIBLINEAR interface was used to build a decent sized text classification
+model(with 10 classes and 10000 features) using 100,000 text records (through 
+ActiveRecord in a Rails app) as training data, the recall rate is 99% and
+predication rate is around 90% on 2000 test records. The same model was tried
+with arbitrary and web page texts with pretty good results.
+
+== INSTALL:
+
+Currently the gem is available on linux only(tested on Ubuntu 8 and Fedora 9/10,
+and should work on OS X), and you will need g++ installed to compile the native 
+code. 
+
+  sudo gem sources -a http://gems.github.com   (you only have to do this once)
+  sudo gem install tomz-liblinear-ruby-swig
+
+== SYNOPSIS:
+
+Try the following multiclass problem in irb:
+
+irb(main):001:0> require 'rubygems'
+irb(main):002:0> require 'linear'
+irb(main):003:0> pa = LParameter.new
+irb(main):004:0> pa.solver_type = L2LOSS_SVM_DUAL
+irb(main):005:0> pa.eps = 0.1
+irb(main):006:0> bias = 1
+irb(main):007:0> labels = [1, 2, 1, 2, 3]
+irb(main):008:0> samples = [
+irb(main):009:1*            {1=>0,2=>0.1,3=>0.2,4=>0,5=>0},
+irb(main):010:1*            {1=>0,2=>0.1,3=>0.3,4=>-1.2,5=>0},
+irb(main):011:1*            {1=>0.4,2=>0,3=>0,4=>0,5=>0},
+irb(main):012:1*            {1=>0,2=>0.1,3=>0,4=>1.4,5=>0.5},
+irb(main):013:1*            {1=>-0.1,2=>-0.2,3=>0.1,4=>1.1,5=>0.1}
+irb(main):014:1>           ]
+irb(main):015:0> pa.solver_type = MCSVM_CS
+irb(main):016:0> sp = LProblem.new(labels,samples,bias)
+irb(main):017:0> m = LModel.new(sp, pa)
+irb(main):018:0>  pred = m.predict({1=>1,2=>0.1,3=>0.2,4=>0,5=>0})
+=> 1
+irb(main):019:0>  pred = m.predict({1=>0,2=>0.1,3=>0.2,4=>0,5=>0})
+=> 2
+irb(main):020:0>  pred = m.predict({1=>0,2=>0.1,3=>0.2,4=>0,5=>0})
+=> 2
+irb(main):025:0>  pred = m.predict({1=>0.4,2=>0,3=>0,4=>0,5=>0})
+=> 1
+irb(main):021:0>  pred = m.predict({1=>-0.1,2=>-0.2,3=>0.1,4=>1.1,5=>0.1})
+=> 3
+irb(main):022:0> m.save("test.model")
+
+
+For more examples see test*.rb in the liblinear-ruby-swig/liblinear-1.33/ruby
+directory
+
+== AUTHOR:
+
+Tom Zeng
+http://www.tomzconsulting.com
+http://www.linkedin.com/in/tomzeng
+tom.z.zeng _at_ gmail _dot_ com
+
