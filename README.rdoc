@@ -9,7 +9,7 @@ This is the Ruby LIBLINEAR SWIG (Simplified Wrapper and Interface Generator)
 interface. LIBLINEAR is a high performance machine learning library for large 
 scale text mining(http://www.csie.ntu.edu.tw/~cjlin/liblinear).
 
-A slightly modified version of LIBLINEAR 1.33 is included which allows turnning
+A slightly modified version of LIBLINEAR 1.33 is included which allows turning
 on/off the default debuging/logging messages. You don't need your own copy of 
 SWIG to use this library - all needed files are generated using SWIG already.
 
