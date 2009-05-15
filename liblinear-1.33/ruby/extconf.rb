@@ -1,2 +1,2 @@
 require 'mkmf'
-create_makefile('linearc')
+create_makefile('liblinear')
