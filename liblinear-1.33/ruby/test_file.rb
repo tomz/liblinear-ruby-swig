@@ -6,7 +6,7 @@ Liblinear::info_on = 0
 solvers = [ L2_LR, L2LOSS_SVM_DUAL, L2LOSS_SVM, L1LOSS_SVM_DUAL, MCSVM_CS ]
 snames= [ 'L2_LR', 'L2LOSS_SVM_DUAL', 'L2LOSS_SVM', 'L1LOSS_SVM_DUAL', 'MCSVM_CS' ]
 
-labels,samples = read_file("../data/multiclass/news20.scale")
+labels,samples = read_file("../heart_scale")
 
 pa = LParameter.new
 pa.C = 1
