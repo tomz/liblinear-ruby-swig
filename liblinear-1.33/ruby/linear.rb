@@ -99,7 +99,7 @@ class LParameter
   end
 end
 
-def _convert_to_feature_node_array(x, bias=-1)
+def _convert_to_feature_node_array(x, maxlen, bias=-1)
   # convert a sequence or mapping to an feature_node array
   
   # Find non zero elements
@@ -121,7 +121,7 @@ def _convert_to_feature_node_array(x, bias=-1)
   if bias >=0
     data = feature_node_array(iter_range.size+2)
     #puts "bias element (#{iter_range.size},#{bias})"
-    feature_node_array_set(data,iter_range.size,iter_range.size,bias)
+    feature_node_array_set(data,iter_range.size,maxlen+1,bias)
     feature_node_array_set(data,iter_range.size+1,-1,0)
   else
     data = feature_node_array(iter_range.size+1)
@@ -154,17 +154,25 @@ class LProblem
     @x_matrix = x_matrix = feature_node_matrix(size)
     @data = []
     @maxlen = 0  #max number of features
+    len_array=[]
+
     for i in (0..size-1)
-      data = _convert_to_feature_node_array(x[i], bias)
+      data = _convert_to_feature_node_array(x[i], @maxlen, bias)
       @data << data
       feature_node_matrix_set(x_matrix,i,data)
+
       if x[i].class == Hash
         if x[i].size > 0
-          @maxlen = [@maxlen,x[i].keys.max].max
+          @maxlen = [@maxlen,x[i].keys.max].max          
         end
       else
         @maxlen = [@maxlen,x[i].size].max
       end
+      len_array << x[i].size      
+    end
+
+    if bias >= 0
+      set_bias_index(x_matrix, size, @maxlen, _int_array(len_array))
     end
     
     prob.y = y_array
@@ -217,7 +225,7 @@ class LModel
   end
   
   def predict(x)
-    data = _convert_to_feature_node_array(x, @model.bias)
+    data = _convert_to_feature_node_array(x, @model.nr_feature, @model.bias)
     ret = Liblinear::predict(@model,data)
     feature_node_array_destroy(data)
     return ret
@@ -235,7 +243,7 @@ class LModel
   def predict_values_raw(x)
     #convert x into feature_node, allocate a double array for return
     n = (@nr_class*(@nr_class-1)/2).floor
-    data = _convert_to_feature_node_array(x, @model.bias)
+    data = _convert_to_feature_node_array(x, @model.nr_feature, @model.bias)
     dblarr = new_double(n)
     Liblinear::predict_values(@model, data, dblarr)
     ret = _double_array_to_list(dblarr, n)
@@ -276,7 +284,7 @@ class LModel
 #    end
     
     #convert x into feature_node, alloc a double array to receive probabilities
-    data = _convert_to_feature_node_array(x,@model.bias)
+    data = _convert_to_feature_node_array(x, @model.nr_feature, @model.bias)
     dblarr = new_double(@nr_class)
     pred = Liblinear::predict_probability(@model, data, dblarr)
     pv = _double_array_to_list(dblarr, @nr_class)

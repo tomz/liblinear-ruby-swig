@@ -2120,6 +2120,13 @@ void feature_node_matrix_set(struct feature_node **matrix, int i, struct feature
 	matrix[i] = array;
 }
 
+void set_bias_index(struct feature_node **matrix, int size, int maxlen, int *len_array)
+{
+        int i;
+        for(i=0; i<size; i++)
+                (matrix[i]+len_array[i])->index = maxlen+1;        
+}
+
 void feature_node_matrix_destroy(struct feature_node **matrix)
 {
 	free(matrix);
@@ -4096,6 +4103,51 @@ fail:
 
 
 SWIGINTERN VALUE
+_wrap_set_bias_index(int argc, VALUE *argv, VALUE self) {
+  feature_node **arg1 = (feature_node **) 0 ;
+  int arg2 ;
+  int arg3 ;
+  int *arg4 = (int *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  
+  if ((argc < 4) || (argc > 4)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 4)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_p_feature_node, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "feature_node **","set_bias_index", 1, argv[0] )); 
+  }
+  arg1 = reinterpret_cast< feature_node ** >(argp1);
+  ecode2 = SWIG_AsVal_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "int","set_bias_index", 2, argv[1] ));
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_int(argv[2], &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), Ruby_Format_TypeError( "", "int","set_bias_index", 3, argv[2] ));
+  } 
+  arg3 = static_cast< int >(val3);
+  res4 = SWIG_ConvertPtr(argv[3], &argp4,SWIGTYPE_p_int, 0 |  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), Ruby_Format_TypeError( "", "int *","set_bias_index", 4, argv[3] )); 
+  }
+  arg4 = reinterpret_cast< int * >(argp4);
+  set_bias_index(arg1,arg2,arg3,arg4);
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 _wrap_feature_node_matrix_destroy(int argc, VALUE *argv, VALUE self) {
   feature_node **arg1 = (feature_node **) 0 ;
   void *argp1 = 0 ;
@@ -4520,6 +4572,7 @@ SWIGEXPORT void Init_liblinear(void) {
   rb_define_module_function(mLiblinear, "feature_node_array_destroy", VALUEFUNC(_wrap_feature_node_array_destroy), -1);
   rb_define_module_function(mLiblinear, "feature_node_matrix", VALUEFUNC(_wrap_feature_node_matrix), -1);
   rb_define_module_function(mLiblinear, "feature_node_matrix_set", VALUEFUNC(_wrap_feature_node_matrix_set), -1);
+  rb_define_module_function(mLiblinear, "set_bias_index", VALUEFUNC(_wrap_set_bias_index), -1);
   rb_define_module_function(mLiblinear, "feature_node_matrix_destroy", VALUEFUNC(_wrap_feature_node_matrix_destroy), -1);
 }
 

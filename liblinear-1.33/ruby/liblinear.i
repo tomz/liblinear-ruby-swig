@@ -93,6 +93,13 @@ void feature_node_matrix_set(struct feature_node **matrix, int i, struct feature
 	matrix[i] = array;
 }
 
+void set_bias_index(struct feature_node **matrix, int size, int maxlen, int *len_array)
+{
+        int i;
+        for(i=0; i<size; i++)
+                (matrix[i]+len_array[i])->index = maxlen+1;        
+}
+
 void feature_node_matrix_destroy(struct feature_node **matrix)
 {
 	free(matrix);

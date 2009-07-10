@@ -1,11 +1,13 @@
 require 'rubygems'
+gem 'hoe', '>=1.8.3','<= 1.12.2'
 require 'hoe'
+
 
 task :default => ["sync_files","make_gem"] 
 
 EXT = "ext/liblinear?.#{Hoe::DLEXT}"
 
-Hoe.new('liblinear-ruby-swig', '0.1.0') do |p|
+Hoe.new('liblinear-ruby-swig', '0.1.1') do |p|
   p.author = 'Tom Zeng'
   p.email = 'tom.z.zeng@gmail.com'
   p.url = 'http://www.tomzconsulting.com'
