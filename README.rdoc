@@ -2,6 +2,7 @@
 
 * Ruby interface to LIBLINEAR (using SWIG)
 * http://www.tomzconsulting.com
+* http://tweetsentiments.com
 
 == DESCRIPTION:
 
@@ -18,6 +19,9 @@ model(with 10 classes and 10000 features) using 100,000 text records (through
 ActiveRecord in a Rails app) as training data, the recall rate is 99% and
 predication rate is around 90% on 2000 test records. The same model was tried
 with arbitrary and web page texts with pretty good results.
+
+LIBLINEAR is in use at http://tweetsentiments.com - A Twitter / Tweet sentiment
+analysis application
 
 == INSTALL:
 
@@ -69,7 +73,7 @@ directory
 == AUTHOR:
 
 Tom Zeng
+- http://twitter.com/tomzeng
 - http://www.tomzconsulting.com
 - http://www.linkedin.com/in/tomzeng
 - tom.z.zeng _at_ gmail _dot_ com
-
