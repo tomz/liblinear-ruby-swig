@@ -6,7 +6,7 @@ Liblinear::info_on = 0
 
 param = LParameter.new
 param.C = 1
-param.solver_type = L2LOSS_SVM_DUAL
+param.solver_type = L2R_L2LOSS_SVC_DUAL
 param.eps= 0.1
 param.nr_weight = 0
 bias = 1

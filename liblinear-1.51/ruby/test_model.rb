@@ -1,17 +1,17 @@
 #!/usr/bin/env ruby
 require 'rubygems'
 require 'linear'
-Liblinear::info_on = 0
+Liblinear::info_on = 1
 
-solvers = [ L2_LR, L2LOSS_SVM_DUAL, L2LOSS_SVM, L1LOSS_SVM_DUAL, MCSVM_CS ]
-snames= [ 'L2_LR', 'L2LOSS_SVM_DUAL', 'L2LOSS_SVM', 'L1LOSS_SVM_DUAL', 'MCSVM_CS' ]
+solvers = [ L2R_LR, L2R_L2LOSS_SVC_DUAL, L2R_L2LOSS_SVC, L2R_L1LOSS_SVC_DUAL, MCSVM_CS, L1R_L2LOSS_SVC, L1R_LR ]
+snames= [ 'L2R_LR', 'L2R_L2LOSS_SVC_DUAL', 'L2R_L2LOSS_SVC', 'L2R_L1LOSS_SVC_DUAL', 'MCSVM_CS', 'L1R_L2LOSS_SVC', 'L1R_LR' ]
 
 data_file = "../heart_scale"
 labels,samples = read_file(data_file)
 
 pa = LParameter.new
 pa.C = 1
-pa.solver_type = L2LOSS_SVM_DUAL
+pa.solver_type = L2R_L2LOSS_SVC_DUAL
 pa.eps= 0.1
 pa.nr_weight = 0
 #pa.weight_label = []
@@ -24,7 +24,7 @@ m = LModel.new("#{data_file}.model")
 
 ec = 0
 labels.each_index { |i|
-  if pa.solver_type == L2_LR and not m.probability.nil?
+  if pa.solver_type == L2R_LR and not m.probability.nil?
     pred, probs = m.predict_probability(samples[i])
 #    puts "Got #{pred} and #{probs.join(',')} for sample: [#{samples[i].inspect}]  Label: #{labels[i]}  Pred: #{pred}"
   else

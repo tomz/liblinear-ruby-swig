@@ -13,8 +13,8 @@ bias = 1
 problem = LProblem.new(labels, samples, bias)
 size = samples.size
 
-solvers = [ L2_LR, L2LOSS_SVM_DUAL, L2LOSS_SVM, L1LOSS_SVM_DUAL, MCSVM_CS ]
-snames= [ 'L2_LR', 'L2LOSS_SVM_DUAL', 'L2LOSS_SVM', 'L1LOSS_SVM_DUAL', 'MCSVM_CS' ]
+solvers = [ L2R_LR, L2R_L2LOSS_SVC_DUAL, L2R_L2LOSS_SVC, L2R_L1LOSS_SVC_DUAL, MCSVM_CS, L1R_L2LOSS_SVC, L1R_LR ]
+snames= [ 'L2R_LR', 'L2R_L2LOSS_SVC_DUAL', 'L2R_L2LOSS_SVC', 'L2R_L1LOSS_SVC_DUAL', 'MCSVM_CS', 'L1R_L2LOSS_SVC', 'L1R_LR' ]
 
 param = LParameter.new('C' => 1,'nr_weight' => 2,'weight_label' => [1,0],'weight' => [10,1])
 for k in solvers
@@ -34,7 +34,7 @@ for k in solvers
 	puts "##########################################"
 end
 
-param = LParameter.new('solver_type' => L2_LR, 'C'=>10)
+param = LParameter.new('solver_type' => L2R_LR, 'C'=>10)
 model = LModel.new(problem, param)
 puts "##########################################"
 puts " Decision values of predicting #{samples[0].inspect}"
@@ -51,7 +51,7 @@ for i in model.get_labels
   end
 end
 
-param = LParameter.new('solver_type' => L2_LR, 'C'=>10)#, 'probability' => 1)
+param = LParameter.new('solver_type' => L2R_LR, 'C'=>10)#, 'probability' => 1)
 model = LModel.new(problem, param)
 pred_label, pred_probability = model.predict_probability(samples[1])
 puts "##########################################"
