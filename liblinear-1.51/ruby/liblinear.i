@@ -1,9 +1,7 @@
-#ifndef _LIBLINEAR_H
-#define _LIBLINEAR_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+%module liblinear
+%{
+#include "linear.h"
+%}
 
 struct feature_node
 {
@@ -39,7 +37,7 @@ struct model
 	int nr_class;		/* number of classes */
 	int nr_feature;
 	double *w;
-	int *label;		/* label of each class */
+	int *label;		/* label of each class (label[n]) */
 	double bias;
 };
 
@@ -60,11 +58,51 @@ void get_labels(const struct model *model_, int* label);
 void destroy_model(struct model *model_);
 void destroy_param(struct parameter *param);
 const char *check_parameter(const struct problem *prob, const struct parameter *param);
-extern void (*liblinear_print_string) (const char *);
 
-#ifdef __cplusplus
+%include carrays.i		
+%array_functions(int,int)
+%array_functions(double,double)
+
+
+%inline %{
+extern int info_on;
+
+struct feature_node *feature_node_array(int size)
+{
+	return (struct feature_node *)malloc(sizeof(struct feature_node)*size);
 }
-#endif
 
-#endif /* _LIBLINEAR_H */
+void feature_node_array_set(struct feature_node *array, int i, int index, double value)
+{
+	array[i].index = index;
+	array[i].value = value;
+}
 
+void feature_node_array_destroy(struct feature_node *array)
+{
+	free(array);
+}
+
+struct feature_node **feature_node_matrix(int size)
+{
+	return (struct feature_node **)malloc(sizeof(struct feature_node *)*size);	
+}
+
+void feature_node_matrix_set(struct feature_node **matrix, int i, struct feature_node* array)
+{
+	matrix[i] = array;
+}
+
+void set_bias_index(struct feature_node **matrix, int size, int maxlen, int *len_array)
+{
+        int i;
+        for(i=0; i<size; i++)
+                (matrix[i]+len_array[i])->index = maxlen+1;        
+}
+
+void feature_node_matrix_destroy(struct feature_node **matrix)
+{
+	free(matrix);
+}
+
+%}

@@ -10,7 +10,7 @@ This is the Ruby LIBLINEAR SWIG (Simplified Wrapper and Interface Generator)
 interface. LIBLINEAR is a high performance machine learning library for large 
 scale text mining(http://www.csie.ntu.edu.tw/~cjlin/liblinear).
 
-A slightly modified version of LIBLINEAR 1.33 is included which allows turning
+A slightly modified version of LIBLINEAR 1.51 is included which allows turning
 on/off the default debuging/logging messages. You don't need your own copy of 
 SWIG to use this library - all needed files are generated using SWIG already.
 
@@ -25,7 +25,7 @@ analysis application
 
 == INSTALL:
 
-Currently the gem is available on linux only(tested on Ubuntu 8 and Fedora 9/10,
+Currently the gem is available on linux only(tested on Ubuntu 8-9 and Fedora 9-12,
 and should work on OS X), and you will need g++ installed to compile the native 
 code. 
 
@@ -67,7 +67,7 @@ Try the following multiclass problem in irb:
     irb(main):023:0> "your imagination " * 10
 
 
-For more examples see test*.rb in the liblinear-ruby-swig/liblinear-1.33/ruby
+For more examples see test*.rb in the liblinear-ruby-swig/liblinear-1.51/ruby
 directory
 
 == AUTHOR:

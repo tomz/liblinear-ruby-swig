@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name = %q{liblinear-ruby-swig}
-  s.version = "0.1.1"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tom Zeng"]
-  s.date = %q{2009-07-10}
+  s.date = %q{2010-03-27}
   s.description = %q{Ruby wrapper of LIBLINEAR using SWIG}
   s.email = %q{tom.z.zeng@gmail.com}
   s.extensions = ["ext/extconf.rb"]

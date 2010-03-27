@@ -4,58 +4,65 @@ SHELL = /bin/sh
 #### Start of system configuration section. ####
 
 srcdir = .
-topdir = /usr/lib/ruby/1.8/i486-linux
+topdir = /usr/local/lib/ruby/1.8/x86_64-linux
 hdrdir = $(topdir)
 VPATH = $(srcdir):$(topdir):$(hdrdir)
-prefix = $(DESTDIR)/usr
 exec_prefix = $(prefix)
-sitedir = $(DESTDIR)/usr/local/lib/site_ruby
+prefix = $(DESTDIR)/usr/local
+sharedstatedir = $(prefix)/com
+mandir = $(datarootdir)/man
+psdir = $(docdir)
+oldincludedir = $(DESTDIR)/usr/include
+localedir = $(datarootdir)/locale
+bindir = $(exec_prefix)/bin
+libexecdir = $(exec_prefix)/libexec
+sitedir = $(libdir)/ruby/site_ruby
+htmldir = $(docdir)
+vendorarchdir = $(vendorlibdir)/$(sitearch)
+includedir = $(prefix)/include
+infodir = $(datarootdir)/info
+vendorlibdir = $(vendordir)/$(ruby_version)
+sysconfdir = $(prefix)/etc
+libdir = $(exec_prefix)/lib
+sbindir = $(exec_prefix)/sbin
 rubylibdir = $(libdir)/ruby/$(ruby_version)
 docdir = $(datarootdir)/doc/$(PACKAGE)
 dvidir = $(docdir)
+vendordir = $(libdir)/ruby/vendor_ruby
 datarootdir = $(prefix)/share
-archdir = $(rubylibdir)/$(arch)
-sbindir = $(exec_prefix)/sbin
-psdir = $(docdir)
-localedir = $(datarootdir)/locale
-htmldir = $(docdir)
-datadir = $(datarootdir)
-includedir = $(prefix)/include
-infodir = $(prefix)/share/info
-sysconfdir = $(DESTDIR)/etc
-mandir = $(prefix)/share/man
-libdir = $(exec_prefix)/lib
-sharedstatedir = $(prefix)/com
-oldincludedir = $(DESTDIR)/usr/include
 pdfdir = $(docdir)
+archdir = $(rubylibdir)/$(arch)
 sitearchdir = $(sitelibdir)/$(sitearch)
-bindir = $(exec_prefix)/bin
-localstatedir = $(DESTDIR)/var
+datadir = $(datarootdir)
+localstatedir = $(prefix)/var
 sitelibdir = $(sitedir)/$(ruby_version)
-libexecdir = $(prefix)/lib/ruby1.8
 
-CC = cc
-LIBRUBY = $(LIBRUBY_SO)
+CC = gcc
+LIBRUBY = $(LIBRUBY_A)
 LIBRUBY_A = lib$(RUBY_SO_NAME)-static.a
-LIBRUBYARG_SHARED = -l$(RUBY_SO_NAME)
+LIBRUBYARG_SHARED = -Wl,-R -Wl,$(libdir) -L$(libdir) 
 LIBRUBYARG_STATIC = -l$(RUBY_SO_NAME)-static
 
 RUBY_EXTCONF_H = 
 CFLAGS   =  -fPIC  -Wall -O3  -DHAVE_DEFINE_ALLOC_FUNCTION 
 INCFLAGS = -I. -I$(topdir) -I$(hdrdir) -I$(srcdir)
-CPPFLAGS =  
+DEFS     = 
+CPPFLAGS =   $(DEFS) $(cppflags)
 CXXFLAGS = $(CFLAGS) 
-DLDFLAGS = -L. -Wl,-Bsymbolic-functions -rdynamic -Wl,-export-dynamic  
+ldflags  = -L.  -rdynamic -Wl,-export-dynamic
+dldflags = 
+archflag = 
+DLDFLAGS = $(ldflags) $(dldflags) $(archflag)
 LDSHARED = g++ -shared
 AR = ar
 EXEEXT = 
 
-RUBY_INSTALL_NAME = ruby1.8
-RUBY_SO_NAME = ruby1.8
-arch = i486-linux
-sitearch = i486-linux
+RUBY_INSTALL_NAME = ruby
+RUBY_SO_NAME = ruby
+arch = x86_64-linux
+sitearch = x86_64-linux
 ruby_version = 1.8
-ruby = /usr/bin/ruby1.8
+ruby = /usr/local/bin/ruby
 RUBY = $(ruby)
 RM = rm -f
 MAKEDIRS = mkdir -p
@@ -69,7 +76,7 @@ COPY = cp
 preload = 
 
 libpath = . $(libdir)
-LIBPATH =  -L"." -L"$(libdir)"
+LIBPATH =  -L. -L$(libdir) -Wl,-R$(libdir)
 DEFFILE = 
 
 CLEANFILES = mkmf.log
@@ -79,14 +86,15 @@ extout =
 extout_prefix = 
 target_prefix = /liblinear-ruby-swig
 LOCAL_LIBS = 
-LIBS = $(LIBRUBYARG_SHARED)  -lpthread -ldl -lcrypt -lm   -lc
-SRCS = dnrm2.c daxpy.c ddot.c dscal.c liblinear_wrap.cxx tron.cpp linear.cpp
-OBJS = dnrm2.o daxpy.o ddot.o dscal.o liblinear_wrap.o tron.o linear.o
+LIBS =   -lrt -ldl -lcrypt -lm   -lc
+SRCS = dnrm2.c ddot.c daxpy.c dscal.c liblinear_wrap.cxx tron.cpp linear.cpp
+OBJS = dnrm2.o ddot.o daxpy.o dscal.o liblinear_wrap.o tron.o linear.o
 TARGET = liblinear
 DLLIB = $(TARGET).so
 EXTSTATIC = 
 STATIC_LIB = 
 
+BINDIR        = $(bindir)
 RUBYCOMMONDIR = $(sitedir)$(target_prefix)
 RUBYLIBDIR    = $(sitelibdir)$(target_prefix)
 RUBYARCHDIR   = $(sitearchdir)$(target_prefix)
@@ -140,7 +148,7 @@ site-install-rb: install-rb
 .c.o:
 	$(CC) $(INCFLAGS) $(CPPFLAGS) $(CFLAGS) -c $<
 
-$(DLLIB): $(OBJS)
+$(DLLIB): $(OBJS) Makefile
 	@-$(RM) $@
 	$(LDSHARED) -o $@ $(OBJS) $(LIBPATH) $(DLDFLAGS) $(LOCAL_LIBS) $(LIBS)
 
