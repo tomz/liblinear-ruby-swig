@@ -52,7 +52,7 @@ class LParameter
   
   def initialize(*args)
     @param = Parameter.new
-    @param.solver_type = L2_LR
+    @param.solver_type = L2R_LR
     @param.C = 1
     @param.eps = 0.01
     @param.nr_weight = 0

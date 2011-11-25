@@ -7,7 +7,7 @@ task :default => ["sync_files","make_gem"]
 
 EXT = "ext/liblinear?.#{Hoe::DLEXT}"
 
-Hoe.new('liblinear-ruby-swig', '0.2.0') do |p|
+Hoe.new('liblinear-ruby-swig', '0.3.0') do |p|
   p.author = 'Tom Zeng'
   p.email = 'tom.z.zeng@gmail.com'
   p.url = 'http://www.tomzconsulting.com'
@@ -28,19 +28,19 @@ file EXT => ["ext/extconf.rb", "ext/liblinear_wrap.cxx", "ext/linear.cpp", "ext/
 end
 
 task :sync_files do
-  cp "liblinear-1.51/linear.h","ext/"
-  cp "liblinear-1.51/linear.cpp","ext/"
-  cp "liblinear-1.51/tron.h","ext/"
-  cp "liblinear-1.51/tron.cpp","ext/"
-  cp "liblinear-1.51/ruby/liblinear_wrap.cxx","ext/"
-  cp "liblinear-1.51/blas/blas.h","ext/"
-  cp "liblinear-1.51/blas/blasp.h","ext/"
-  cp "liblinear-1.51/blas/dscal.c","ext/"
-  cp "liblinear-1.51/blas/dnrm2.c","ext/"
-  cp "liblinear-1.51/blas/ddot.c","ext/"
-  cp "liblinear-1.51/blas/daxpy.c","ext/"
-  cp "liblinear-1.51/ruby/linear.rb","lib/"
-  cp "liblinear-1.51/ruby/linear_cv.rb","lib/"
+  cp "liblinear-1.8/linear.h","ext/"
+  cp "liblinear-1.8/linear.cpp","ext/"
+  cp "liblinear-1.8/tron.h","ext/"
+  cp "liblinear-1.8/tron.cpp","ext/"
+  cp "liblinear-1.8/ruby/liblinear_wrap.cxx","ext/"
+  cp "liblinear-1.8/blas/blas.h","ext/"
+  cp "liblinear-1.8/blas/blasp.h","ext/"
+  cp "liblinear-1.8/blas/dscal.c","ext/"
+  cp "liblinear-1.8/blas/dnrm2.c","ext/"
+  cp "liblinear-1.8/blas/ddot.c","ext/"
+  cp "liblinear-1.8/blas/daxpy.c","ext/"
+  cp "liblinear-1.8/ruby/linear.rb","lib/"
+  cp "liblinear-1.8/ruby/linear_cv.rb","lib/"
 end
 
 task :test do
