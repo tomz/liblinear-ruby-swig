@@ -1703,7 +1703,7 @@ SWIG_AsCharPtrAndSize(VALUE obj, char** cptr, size_t* psize, int *alloc)
     
 
 
-    char *cstr = STR2CSTR(obj);
+    char *cstr = StringValuePtr(obj);
     
     size_t size = RSTRING_LEN(obj) + 1;
     if (cptr)  {
