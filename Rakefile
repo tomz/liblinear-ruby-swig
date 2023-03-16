@@ -1,6 +1,6 @@
 task :default => ["sync_files","make_gem"]
 
-EXT = "ext/liblinear?.#{RbConfig::CONFIG["DLEXT"]}"
+EXT = "lib/liblinear?.#{RbConfig::CONFIG["DLEXT"]}"
 
 task :make_gem => EXT
 
@@ -8,6 +8,13 @@ file EXT => ["ext/extconf.rb", "ext/liblinear_wrap.cxx", "ext/linear.cpp", "ext/
   Dir.chdir "ext" do
     ruby "extconf.rb"
     sh "make"
+    cp "liblinear.bundle","../lib/"
+  end
+end
+
+task :clean do
+  Dir.chdir "ext" do
+    sh "make clean"
   end
 end
 

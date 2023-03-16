@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.has_rdoc = false
   s.homepage = %q{http://www.tomzconsulting.com}
   s.rdoc_options = ["--main", "README.rdoc"]
-  s.require_paths = ["lib","ext"]
+  s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.1}
   s.summary = %q{Ruby wrapper of LIBLINEAR using SWIG}
 

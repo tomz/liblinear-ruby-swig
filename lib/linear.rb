@@ -1,4 +1,4 @@
-require 'liblinear'
+require 'liblinear-ruby-swig/liblinear'
 include Liblinear
 
 def _int_array(seq)
