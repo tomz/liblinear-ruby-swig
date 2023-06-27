@@ -1,22 +1,6 @@
-require 'rubygems'
-gem 'hoe', '>=1.8.3','<= 1.12.2'
-require 'hoe'
+task :default => ["sync_files","make_gem"]
 
-
-task :default => ["sync_files","make_gem"] 
-
-EXT = "ext/liblinear?.#{Hoe::DLEXT}"
-
-Hoe.new('liblinear-ruby-swig', '0.3.0') do |p|
-  p.author = 'Tom Zeng'
-  p.email = 'tom.z.zeng@gmail.com'
-  p.url = 'http://www.tomzconsulting.com'
-  p.summary = 'Ruby wrapper of LIBLINEAR using SWIG'
-  p.description = 'Ruby wrapper of LIBLINEAR using SWIG'
-  
-  p.spec_extras[:extensions] = "ext/extconf.rb"
-  p.clean_globs << EXT << "ext/*.o" << "ext/Makefile"
-end
+EXT = "lib/liblinear?.#{RbConfig::CONFIG["DLEXT"]}"
 
 task :make_gem => EXT
 
@@ -24,6 +8,13 @@ file EXT => ["ext/extconf.rb", "ext/liblinear_wrap.cxx", "ext/linear.cpp", "ext/
   Dir.chdir "ext" do
     ruby "extconf.rb"
     sh "make"
+    cp "liblinear.bundle","../lib/"
+  end
+end
+
+task :clean do
+  Dir.chdir "ext" do
+    sh "make clean"
   end
 end
 
